@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { LocalDataSource } from "ng2-smart-table";
 
@@ -52,11 +53,16 @@ export class ListarComponent implements OnInit {
         type: 'number',
       },
     },
+    mode: 'external',
+    actions: {position:'right'}
   };
 
   source: LocalDataSource = new LocalDataSource();
 
-  constructor(private service: SmartTableData) {
+  constructor(
+    private service: SmartTableData,
+    private router: Router,
+  ) {
     const data = this.service.getData();
     this.source.load(data);
   }
@@ -72,4 +78,9 @@ export class ListarComponent implements OnInit {
       event.confirm.reject();
     }
   }
+
+  create(event){
+    this.router.navigate(['/pages/clientes/create'])
+  }
+
 }
